@@ -3,4 +3,21 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="linkmanTextColor">#d08922</color>
+    <color name="blockTextColor_2">#FFFFFF</color>
+    <color name="blockTextColor_4">#FFFFFF</color>
+    <color name="blockTextColor_8">#FFFFFF</color>
+    <color name="blockTextColor_16">#FFFFFF</color>
+    <color name="blockTextColor_32">#FFFFFF</color>
+    <color name="blockTextColor_64">#FFFFFF</color>
+    <color name="blockTextColor_128">#FFFFFF</color>
+    <color name="blockTextColor_256">#FFFFFF</color>
+    <color name="blockTextColor_512">#FFFFFF</color>
+    <color name="blockTextColor_1024">#FFFFFF</color>
+    <color name="blockTextColor_2048">#FFFFFF</color>
+    <color name="blockTextColor_4096">#FFFFFF</color>
+    <color name="blockTextColor_8192">#FFFFFF</color>
+    <color name="blockTextColor_16384">#FFFFFF</color>
+    <color name="blockTextColor_32768">#FFFFFF</color>
+    <color name="blockTextColor_65536">#FFFFFF</color>
 </resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="spacer">8dp</dimen>
+    <dimen name="radius">8dp</dimen>
+    <dimen name="margin">8dp</dimen>
+    <dimen name="padding">8dp</dimen>
+    <dimen name="text_size_1font">48dp</dimen>
+    <dimen name="text_size_2font">44dp</dimen>
+    <dimen name="text_size_3font">36dp</dimen>
+    <dimen name="text_size_4font">28dp</dimen>
+    <dimen name="text_size_5font">20dp</dimen>
+</resources>
