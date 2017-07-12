@@ -181,16 +181,16 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        int mini_width = 120;
-        int mini_speed = 0;
-        float distance_right = e2.getX() - e1.getX();
-        float distance_left = e1.getX() - e2.getX();
-        float distance_down = e2.getY() - e1.getY();
-        float distance_up = e1.getY() - e2.getY();
+        float posX = e2.getX() - e1.getX();
+        float posY = e2.getY() - e1.getY();
+        float lenX = Math.abs(posX);
+        float lenY = Math.abs(posY);
         int x, y, n, n2;
         boolean flag;
         boolean isMoved = false, isMovable = true;
-        if (distance_right > mini_width && Math.abs(velocityX) > mini_speed) {
+
+        Log.i(TAG, "posX = " + posX + ", posY = " + posY);
+        if (posX>0 && lenX > lenY) {
             Log.e(TAG, "onFling-" + "向右滑动: " + mIntsToString());
 
             int x2;
@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                     }
                 }
             }
-        } else if (distance_left > mini_width && Math.abs(velocityX) > mini_speed) {
+        } else if (posX<0 && lenX > lenY) {
             Log.e(TAG, "onFling-" + "向左滑动: " + mIntsToString());
 
             int x2;
@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                     }
                 }
             }
-        } else if (distance_down > mini_width && Math.abs(velocityX) > mini_speed) {
+        } else if (posY > 0 && lenY > lenX) {
             Log.e(TAG, "onFling-" + "向下滑动: " + mIntsToString());
 
             int y2;
@@ -286,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                     }
                 }
             }
-        } else if (distance_up > mini_width && Math.abs(velocityX) > mini_speed) {
+        } else if (posY < 0 && lenY > lenX) {
             Log.e(TAG, "onFling-" + "向上滑动: " + mIntsToString());
 
             int y2;
@@ -400,7 +400,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         if (isMovable) {
             Log.e(TAG, "Movable: " + mIntsToString());
-            Log.v(TAG, "=============================");
         }
 
         return true;
