@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
@@ -100,6 +101,10 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     private void setBlock(int y, int x, String txt) {
+        setBlock(y, x, txt, 0);
+    }
+
+    private void setBlock(int y, int x, String txt, int textColor) {
         mBlockViews[y][x].setText(txt);
 
         int bgRes = R.drawable.bg_block;
@@ -112,11 +117,15 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             } catch (NoSuchFieldException | IllegalAccessException | NullPointerException e) {
                 e.printStackTrace();
             }
-            try {
-                field = R.color.class.getDeclaredField("blockTextColor_" + n);
-                mBlockViews[y][x].setTextColor(getResources().getColor(field.getInt(null)));
-            } catch (NoSuchFieldException | IllegalAccessException | NullPointerException e) {
-                e.printStackTrace();
+            if(textColor != 0) {
+                mBlockViews[y][x].setTextColor(textColor);
+            } else {
+                try {
+                    field = R.color.class.getDeclaredField("blockTextColor_" + n);
+                    mBlockViews[y][x].setTextColor(getResources().getColor(field.getInt(null)));
+                } catch (NoSuchFieldException | IllegalAccessException | NullPointerException e) {
+                    e.printStackTrace();
+                }
             }
             try {
                 field = R.dimen.class.getDeclaredField("text_size_" + Integer.toString(n).length() + "font");
@@ -167,9 +176,10 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         float distance_down = e2.getY() - e1.getY();
         float distance_up = e1.getY() - e2.getY();
         int x, y, n, n2;
-        boolean isMoved = false, isMoveable = true;
+        boolean flag;
+        boolean isMoved = false, isMovable = true;
         if (distance_right > mini_width && Math.abs(velocityX) > mini_speed) {
-            Log.e(TAG, "onFling-" + "向右滑动");
+            Log.e(TAG, "onFling-" + "向右滑动: " + mIntsToString());
 
             int x2;
             for (y = 0; y < 4; y++) {
@@ -178,22 +188,30 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                     n = mInts[y][x];
                     if (n > 0) {
                         n2 = mInts[y][x2];
+                        flag = true;
                         if (n == n2) {
                             n += n2;
                             mScore += n;
                         } else if(n2 > 0) {
                             x2--;
-                            continue;
+                            if(x2<=x || mInts[y][x2] > 0) {
+                                flag = false;
+                                continue;
+                            }
+                        } else {
+                            flag = false;
                         }
                         mInts[y][x] = 0;
                         mInts[y][x2] = n;
-                        x2--;
+                        if(flag) {
+                            x2--;
+                        }
                         isMoved = true;
                     }
                 }
             }
         } else if (distance_left > mini_width && Math.abs(velocityX) > mini_speed) {
-            Log.e(TAG, "onFling-" + "向左滑动");
+            Log.e(TAG, "onFling-" + "向左滑动: " + mIntsToString());
 
             int x2;
             for (y = 0; y < 4; y++) {
@@ -202,22 +220,30 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                     n = mInts[y][x];
                     if (n > 0) {
                         n2 = mInts[y][x2];
+                        flag = true;
                         if (n == n2) {
                             n += n2;
                             mScore += n;
                         } else if(n2 > 0) {
                             x2++;
-                            continue;
+                            if(x2>=x || mInts[y][x2] > 0) {
+                                flag = false;
+                                continue;
+                            }
+                        } else {
+                            flag = false;
                         }
                         mInts[y][x] = 0;
                         mInts[y][x2] = n;
-                        x2++;
+                        if(flag) {
+                            x2++;
+                        }
                         isMoved = true;
                     }
                 }
             }
         } else if (distance_down > mini_width && Math.abs(velocityX) > mini_speed) {
-            Log.e(TAG, "onFling-" + "向下滑动");
+            Log.e(TAG, "onFling-" + "向下滑动: " + mIntsToString());
 
             int y2;
             for (x = 0; x < 4; x++) {
@@ -226,22 +252,30 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                     n = mInts[y][x];
                     if (n > 0) {
                         n2 = mInts[y2][x];
+                        flag = true;
                         if (n == n2) {
                             n += n2;
                             mScore += n;
                         } else if(n2 > 0) {
                             y2--;
-                            continue;
+                            if(y2<=y || mInts[y2][x] > 0) {
+                                flag = false;
+                                continue;
+                            }
+                        } else {
+                            flag = false;
                         }
                         mInts[y][x] = 0;
                         mInts[y2][x] = n;
-                        y2--;
+                        if(flag) {
+                            y2--;
+                        }
                         isMoved = true;
                     }
                 }
             }
         } else if (distance_up > mini_width && Math.abs(velocityX) > mini_speed) {
-            Log.e(TAG, "onFling-" + "向上滑动");
+            Log.e(TAG, "onFling-" + "向上滑动: " + mIntsToString());
 
             int y2;
             for (x = 0; x < 4; x++) {
@@ -250,22 +284,34 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                     n = mInts[y][x];
                     if (n > 0) {
                         n2 = mInts[y2][x];
+                        flag = true;
                         if (n == n2) {
                             n += n2;
                             mScore += n;
                         } else if(n2 > 0) {
                             y2++;
-                            continue;
+                            if(y2>=y || mInts[y2][x] > 0) {
+                                flag = false;
+                                continue;
+                            }
+                        } else {
+                            flag = false;
                         }
                         mInts[y][x] = 0;
                         mInts[y2][x] = n;
-                        y2++;
+                        if(flag) {
+                            y2++;
+                        }
                         isMoved = true;
                     }
                 }
             }
         } else {
-            isMoveable = false;
+            isMovable = false;
+        }
+
+        if(isMovable) {
+            Log.e(TAG, "Movable: " + mIntsToString());
         }
 
         if (isMoved) {
@@ -286,10 +332,11 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 Point p = points.get(rnd.nextInt(points.size()));
 
                 mInts[p.y][p.x] = 2;
-                setBlock(p.y, p.x, "2");
+                setBlock(p.y, p.x, "2", 0xFF333333);
 
                 tvScore.setText(Integer.toString(mScore));
-                Log.v(TAG, "score = " + mScore);
+                Log.e(TAG, p.toString());
+                Log.e(TAG, "score = " + mScore);
             } else {
                 Log.v(TAG, "Game Over");
                 view.setOnTouchListener(null);
@@ -313,6 +360,11 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             }
         }
 
+        if(isMovable) {
+            Log.e(TAG, "Movable: " + mIntsToString());
+            Log.v(TAG, "=============================");
+        }
+
         return true;
     }
 
@@ -329,5 +381,21 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     @Override
     public boolean onDoubleTapEvent(MotionEvent e) {
         return false;
+    }
+
+    private String mIntsToString() {
+        StringBuffer sb = new StringBuffer();
+        int y, x;
+        for(y=0; y<4; y++) {
+            sb.append("\t[");
+            for(x=0; x<4; x++) {
+                if(x>0) {
+                    sb.append(", ");
+                }
+                sb.append(mInts[y][x]);
+            }
+            sb.append("]" + (y == 3 ? "" : ",") + "\n");
+        }
+        return "[\n" + sb.toString() + "]";
     }
 }
