@@ -206,8 +206,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                             mScore += n;
                         } else if (n2 > 0) {
                             x2--;
-                            if (x2 <= x || mInts[y][x2] > 0) {
+                            if (x2 > x && mInts[y][x2] == 0) {
                                 flag = false;
+                            } else {
                                 continue;
                             }
                         } else {
@@ -238,8 +239,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                             mScore += n;
                         } else if (n2 > 0) {
                             x2++;
-                            if (x2 >= x || mInts[y][x2] > 0) {
+                            if (x2 < x && mInts[y][x2] == 0) {
                                 flag = false;
+                            } else {
                                 continue;
                             }
                         } else {
@@ -270,8 +272,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                             mScore += n;
                         } else if (n2 > 0) {
                             y2--;
-                            if (y2 <= y || mInts[y2][x] > 0) {
+                            if (y2 > y && mInts[y2][x] == 0) {
                                 flag = false;
+                            } else {
                                 continue;
                             }
                         } else {
@@ -302,8 +305,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                             mScore += n;
                         } else if (n2 > 0) {
                             y2++;
-                            if (y2 >= y || mInts[y2][x] > 0) {
+                            if (y2 < y && mInts[y2][x] == 0) {
                                 flag = false;
+                            } else {
                                 continue;
                             }
                         } else {
