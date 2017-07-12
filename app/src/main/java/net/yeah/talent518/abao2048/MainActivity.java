@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             y2 = rnd.nextInt(4);
             x2 = rnd.nextInt(4);
         } while (y == y2 && x == x2);
-        mInts[y2][y2] = 2;
+        mInts[y2][x2] = 2;
         setBlock(y2, x2, "2");
         playAnimation(y2, x2);
     }
@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         boolean isMoved = false, isMovable = true;
 
         Log.i(TAG, "posX = " + posX + ", posY = " + posY);
-        if (posX>0 && lenX > lenY) {
+        if (posX > 0 && lenX > lenY) {
             Log.e(TAG, "onFling-" + "向右滑动: " + mIntsToString());
 
             int x2;
@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                     }
                 }
             }
-        } else if (posX<0 && lenX > lenY) {
+        } else if (posX < 0 && lenX > lenY) {
             Log.e(TAG, "onFling-" + "向左滑动: " + mIntsToString());
 
             int x2;
