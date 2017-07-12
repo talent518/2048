@@ -2,6 +2,7 @@ package net.yeah.talent518.abao2048;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     };
     Random rnd = new Random();
     GestureDetector mGestureDetector;
+    SharedPreferences pref;
     private TextView[][] mBlockViews = new TextView[4][4];
     private int[][] mInts = {
             {0, 0, 0, 0},
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private int mScore = 0;
     private TextView tvScore;
     private View view;
+    private TextView tvHigh;
+    private int mHigh = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,12 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 setBlock(y, x, "");
             }
         }
+
+        pref = getSharedPreferences("score", MODE_MULTI_PROCESS);
+        mHigh = pref.getInt("high", 0);
+
+        tvHigh = (TextView) findViewById(R.id.high);
+        tvHigh.setText(Integer.toString(mHigh));
 
         initGame(false);
 
@@ -329,8 +339,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 }
             }
 
-            // TODO 游戏结束的判断还需完善！
-            if (points.size() > 1) {
+            boolean isGameOver = false;
+            if (points.size() > 0) {
                 Point p = points.get(rnd.nextInt(points.size()));
 
                 mInts[p.y][p.x] = 2;
@@ -340,26 +350,51 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 tvScore.setText(Integer.toString(mScore));
                 Log.e(TAG, p.toString());
                 Log.e(TAG, "score = " + mScore);
-            } else {
+            }
+
+            if (points.size() <= 1) {
+                isGameOver = true;
+                gameOver:
+                for (y = 0; y < 4; y++) {
+                    for (x = 0; x < 3; x++) {
+                        if (mInts[y][x] == mInts[y][x + 1] || mInts[x][y] == mInts[x + 1][y]) {
+                            isGameOver = false;
+                            break gameOver;
+                        }
+                    }
+                }
+            }
+
+            if (isGameOver) {
                 Log.v(TAG, "Game Over");
                 view.setOnTouchListener(null);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("游戏结束");
-                builder.setMessage("你的得分：" + mScore);
-                builder.setPositiveButton("新游戏", new DialogInterface.OnClickListener() {
+                builder.setMessage("你的得分：" + mScore + (mHigh < mScore ? "\n你打破最高纪录：" + mHigh : ""));
+                builder.setNegativeButton("新游戏", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         view.setOnTouchListener(MainActivity.this);
                         initGame(true);
                     }
                 });
-                builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("退出", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        finish();
                     }
                 });
                 builder.create().show();
+
+                if (mScore > mHigh) {
+                    mHigh = mScore;
+                    SharedPreferences.Editor edit = pref.edit();
+                    edit.putInt("high", mHigh);
+                    edit.commit();
+
+                    tvHigh.setText(Integer.toString(mHigh));
+                }
             }
         }
 
