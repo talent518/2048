@@ -10,11 +10,12 @@ import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.TextView;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private void initGame(boolean isInitVariable) {
         int y, x;
 
-        if(isInitVariable) {
+        if (isInitVariable) {
             for (y = 0; y < 4; y++) {
                 for (x = 0; x < 4; x++) {
                     mInts[y][x] = 0;
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         x = rnd.nextInt(4);
         mInts[y][x] = 2;
         setBlock(y, x, "2");
+        playAnimation(y, x);
 
         int y2, x2;
         do {
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         } while (y == y2 && x == x2);
         mInts[y2][y2] = 2;
         setBlock(y2, x2, "2");
+        playAnimation(y2, x2);
     }
 
     private int getBlockNum(int y, int x) {
@@ -101,10 +104,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     private void setBlock(int y, int x, String txt) {
-        setBlock(y, x, txt, 0);
-    }
-
-    private void setBlock(int y, int x, String txt, int textColor) {
         mBlockViews[y][x].setText(txt);
 
         int bgRes = R.drawable.bg_block;
@@ -117,15 +116,11 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             } catch (NoSuchFieldException | IllegalAccessException | NullPointerException e) {
                 e.printStackTrace();
             }
-            if(textColor != 0) {
-                mBlockViews[y][x].setTextColor(textColor);
-            } else {
-                try {
-                    field = R.color.class.getDeclaredField("blockTextColor_" + n);
-                    mBlockViews[y][x].setTextColor(getResources().getColor(field.getInt(null)));
-                } catch (NoSuchFieldException | IllegalAccessException | NullPointerException e) {
-                    e.printStackTrace();
-                }
+            try {
+                field = R.color.class.getDeclaredField("blockTextColor_" + n);
+                mBlockViews[y][x].setTextColor(getResources().getColor(field.getInt(null)));
+            } catch (NoSuchFieldException | IllegalAccessException | NullPointerException e) {
+                e.printStackTrace();
             }
             try {
                 field = R.dimen.class.getDeclaredField("text_size_" + Integer.toString(n).length() + "font");
@@ -135,6 +130,13 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             }
         }
         mBlockViews[y][x].setBackgroundResource(bgRes);
+    }
+
+    private void playAnimation(int y, int x) {
+        Animation animation = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        animation.setDuration(500);
+        mBlockViews[y][x].clearAnimation();
+        mBlockViews[y][x].startAnimation(animation);
     }
 
     @Override
@@ -192,9 +194,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                         if (n == n2) {
                             n += n2;
                             mScore += n;
-                        } else if(n2 > 0) {
+                        } else if (n2 > 0) {
                             x2--;
-                            if(x2<=x || mInts[y][x2] > 0) {
+                            if (x2 <= x || mInts[y][x2] > 0) {
                                 flag = false;
                                 continue;
                             }
@@ -203,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                         }
                         mInts[y][x] = 0;
                         mInts[y][x2] = n;
-                        if(flag) {
+                        if (flag) {
                             x2--;
                         }
                         isMoved = true;
@@ -224,9 +226,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                         if (n == n2) {
                             n += n2;
                             mScore += n;
-                        } else if(n2 > 0) {
+                        } else if (n2 > 0) {
                             x2++;
-                            if(x2>=x || mInts[y][x2] > 0) {
+                            if (x2 >= x || mInts[y][x2] > 0) {
                                 flag = false;
                                 continue;
                             }
@@ -235,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                         }
                         mInts[y][x] = 0;
                         mInts[y][x2] = n;
-                        if(flag) {
+                        if (flag) {
                             x2++;
                         }
                         isMoved = true;
@@ -256,9 +258,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                         if (n == n2) {
                             n += n2;
                             mScore += n;
-                        } else if(n2 > 0) {
+                        } else if (n2 > 0) {
                             y2--;
-                            if(y2<=y || mInts[y2][x] > 0) {
+                            if (y2 <= y || mInts[y2][x] > 0) {
                                 flag = false;
                                 continue;
                             }
@@ -267,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                         }
                         mInts[y][x] = 0;
                         mInts[y2][x] = n;
-                        if(flag) {
+                        if (flag) {
                             y2--;
                         }
                         isMoved = true;
@@ -288,9 +290,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                         if (n == n2) {
                             n += n2;
                             mScore += n;
-                        } else if(n2 > 0) {
+                        } else if (n2 > 0) {
                             y2++;
-                            if(y2>=y || mInts[y2][x] > 0) {
+                            if (y2 >= y || mInts[y2][x] > 0) {
                                 flag = false;
                                 continue;
                             }
@@ -299,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                         }
                         mInts[y][x] = 0;
                         mInts[y2][x] = n;
-                        if(flag) {
+                        if (flag) {
                             y2++;
                         }
                         isMoved = true;
@@ -310,7 +312,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             isMovable = false;
         }
 
-        if(isMovable) {
+        if (isMovable) {
             Log.e(TAG, "Movable: " + mIntsToString());
         }
 
@@ -318,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             ArrayList<Point> points = new ArrayList<Point>();
             for (y = 0; y < 4; y++) {
                 for (x = 0; x < 4; x++) {
-                    if(mInts[y][x] > 0) {
+                    if (mInts[y][x] > 0) {
                         setBlock(y, x, Integer.toString(mInts[y][x]));
                     } else {
                         points.add(new Point(x, y));
@@ -328,11 +330,12 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             }
 
             // TODO 游戏结束的判断还需完善！
-            if(points.size()>1) {
+            if (points.size() > 1) {
                 Point p = points.get(rnd.nextInt(points.size()));
 
                 mInts[p.y][p.x] = 2;
-                setBlock(p.y, p.x, "2", 0xFF333333);
+                setBlock(p.y, p.x, "2");
+                playAnimation(p.y, p.x);
 
                 tvScore.setText(Integer.toString(mScore));
                 Log.e(TAG, p.toString());
@@ -360,7 +363,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             }
         }
 
-        if(isMovable) {
+        if (isMovable) {
             Log.e(TAG, "Movable: " + mIntsToString());
             Log.v(TAG, "=============================");
         }
@@ -386,10 +389,10 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private String mIntsToString() {
         StringBuffer sb = new StringBuffer();
         int y, x;
-        for(y=0; y<4; y++) {
+        for (y = 0; y < 4; y++) {
             sb.append("\t[");
-            for(x=0; x<4; x++) {
-                if(x>0) {
+            for (x = 0; x < 4; x++) {
+                if (x > 0) {
                     sb.append(", ");
                 }
                 sb.append(mInts[y][x]);

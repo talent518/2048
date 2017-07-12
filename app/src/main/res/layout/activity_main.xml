@@ -115,53 +115,77 @@
                 android:orientation="horizontal"
                 android:showDividers="middle">
 
-                <TextView
-                    android:id="@+id/block_0x0"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_block_2"
-                    android:gravity="center"
-                    android:text="2"
-                    android:textColor="@color/blockTextColor_2"
-                    android:textSize="@dimen/text_size_1font"
-                    android:textStyle="bold" />
+                    android:background="@drawable/bg_block">
 
-                <TextView
-                    android:id="@+id/block_0x1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_block_4"
-                    android:gravity="center"
-                    android:text="4"
-                    android:textColor="@color/blockTextColor_4"
-                    android:textSize="@dimen/text_size_1font"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/block_0x0"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_block_2"
+                        android:gravity="center"
+                        android:text="2"
+                        android:textColor="@color/blockTextColor_2"
+                        android:textSize="@dimen/text_size_1font"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/block_0x2"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_block_8"
-                    android:gravity="center"
-                    android:text="8"
-                    android:textColor="@color/blockTextColor_8"
-                    android:textSize="@dimen/text_size_1font"
-                    android:textStyle="bold" />
+                    android:background="@drawable/bg_block">
 
-                <TextView
-                    android:id="@+id/block_0x3"
+                    <TextView
+                        android:id="@+id/block_0x1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_block_4"
+                        android:gravity="center"
+                        android:text="4"
+                        android:textColor="@color/blockTextColor_4"
+                        android:textSize="@dimen/text_size_1font"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_block_16"
-                    android:gravity="center"
-                    android:text="16"
-                    android:textColor="@color/blockTextColor_16"
-                    android:textSize="@dimen/text_size_2font"
-                    android:textStyle="bold" />
+                    android:background="@drawable/bg_block">
+
+                    <TextView
+                        android:id="@+id/block_0x2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_block_8"
+                        android:gravity="center"
+                        android:text="8"
+                        android:textColor="@color/blockTextColor_8"
+                        android:textSize="@dimen/text_size_1font"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_block">
+
+                    <TextView
+                        android:id="@+id/block_0x3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_block_16"
+                        android:gravity="center"
+                        android:text="16"
+                        android:textColor="@color/blockTextColor_16"
+                        android:textSize="@dimen/text_size_2font"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -172,53 +196,77 @@
                 android:orientation="horizontal"
                 android:showDividers="middle">>
 
-                <TextView
-                    android:id="@+id/block_1x0"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_block_256"
-                    android:gravity="center"
-                    android:text="256"
-                    android:textColor="@color/blockTextColor_256"
-                    android:textSize="@dimen/text_size_3font"
-                    android:textStyle="bold" />
+                    android:background="@drawable/bg_block">
 
-                <TextView
-                    android:id="@+id/block_1x1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_block_128"
-                    android:gravity="center"
-                    android:text="128"
-                    android:textColor="@color/blockTextColor_128"
-                    android:textSize="@dimen/text_size_3font"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/block_1x0"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_block_256"
+                        android:gravity="center"
+                        android:text="256"
+                        android:textColor="@color/blockTextColor_256"
+                        android:textSize="@dimen/text_size_3font"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/block_1x2"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_block_64"
-                    android:gravity="center"
-                    android:text="64"
-                    android:textColor="@color/blockTextColor_64"
-                    android:textSize="@dimen/text_size_2font"
-                    android:textStyle="bold" />
+                    android:background="@drawable/bg_block">
 
-                <TextView
-                    android:id="@+id/block_1x3"
+                    <TextView
+                        android:id="@+id/block_1x1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_block_128"
+                        android:gravity="center"
+                        android:text="128"
+                        android:textColor="@color/blockTextColor_128"
+                        android:textSize="@dimen/text_size_3font"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_block_32"
-                    android:gravity="center"
-                    android:text="32"
-                    android:textColor="@color/blockTextColor_32"
-                    android:textSize="@dimen/text_size_2font"
-                    android:textStyle="bold" />
+                    android:background="@drawable/bg_block">
+
+                    <TextView
+                        android:id="@+id/block_1x2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_block_64"
+                        android:gravity="center"
+                        android:text="64"
+                        android:textColor="@color/blockTextColor_64"
+                        android:textSize="@dimen/text_size_2font"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_block">
+
+                    <TextView
+                        android:id="@+id/block_1x3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_block_32"
+                        android:gravity="center"
+                        android:text="32"
+                        android:textColor="@color/blockTextColor_32"
+                        android:textSize="@dimen/text_size_2font"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -229,53 +277,77 @@
                 android:orientation="horizontal"
                 android:showDividers="middle">>
 
-                <TextView
-                    android:id="@+id/block_2x0"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_block_512"
-                    android:gravity="center"
-                    android:text="512"
-                    android:textColor="@color/blockTextColor_512"
-                    android:textSize="@dimen/text_size_3font"
-                    android:textStyle="bold" />
+                    android:background="@drawable/bg_block">
 
-                <TextView
-                    android:id="@+id/block_2x1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_block_1024"
-                    android:gravity="center"
-                    android:text="1024"
-                    android:textColor="@color/blockTextColor_1024"
-                    android:textSize="@dimen/text_size_4font"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/block_2x0"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_block_512"
+                        android:gravity="center"
+                        android:text="512"
+                        android:textColor="@color/blockTextColor_512"
+                        android:textSize="@dimen/text_size_3font"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/block_2x2"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_block_2048"
-                    android:gravity="center"
-                    android:text="2048"
-                    android:textColor="@color/blockTextColor_2048"
-                    android:textSize="@dimen/text_size_4font"
-                    android:textStyle="bold" />
+                    android:background="@drawable/bg_block">
 
-                <TextView
-                    android:id="@+id/block_2x3"
+                    <TextView
+                        android:id="@+id/block_2x1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_block_1024"
+                        android:gravity="center"
+                        android:text="1024"
+                        android:textColor="@color/blockTextColor_1024"
+                        android:textSize="@dimen/text_size_4font"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_block_4096"
-                    android:gravity="center"
-                    android:text="4096"
-                    android:textColor="@color/blockTextColor_4096"
-                    android:textSize="@dimen/text_size_4font"
-                    android:textStyle="bold" />
+                    android:background="@drawable/bg_block">
+
+                    <TextView
+                        android:id="@+id/block_2x2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_block_2048"
+                        android:gravity="center"
+                        android:text="2048"
+                        android:textColor="@color/blockTextColor_2048"
+                        android:textSize="@dimen/text_size_4font"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_block">
+
+                    <TextView
+                        android:id="@+id/block_2x3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_block_4096"
+                        android:gravity="center"
+                        android:text="4096"
+                        android:textColor="@color/blockTextColor_4096"
+                        android:textSize="@dimen/text_size_4font"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -286,53 +358,77 @@
                 android:orientation="horizontal"
                 android:showDividers="middle">>
 
-                <TextView
-                    android:id="@+id/block_3x0"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_block_65536"
-                    android:gravity="center"
-                    android:text="65536"
-                    android:textColor="@color/blockTextColor_65536"
-                    android:textSize="@dimen/text_size_5font"
-                    android:textStyle="bold" />
+                    android:background="@drawable/bg_block">
 
-                <TextView
-                    android:id="@+id/block_3x1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_block_32768"
-                    android:gravity="center"
-                    android:text="32768"
-                    android:textColor="@color/blockTextColor_32768"
-                    android:textSize="@dimen/text_size_5font"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/block_3x0"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_block_65536"
+                        android:gravity="center"
+                        android:text="65536"
+                        android:textColor="@color/blockTextColor_65536"
+                        android:textSize="@dimen/text_size_5font"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/block_3x2"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_block_16384"
-                    android:gravity="center"
-                    android:text="16384"
-                    android:textColor="@color/blockTextColor_16384"
-                    android:textSize="@dimen/text_size_5font"
-                    android:textStyle="bold" />
+                    android:background="@drawable/bg_block">
 
-                <TextView
-                    android:id="@+id/block_3x3"
+                    <TextView
+                        android:id="@+id/block_3x1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_block_32768"
+                        android:gravity="center"
+                        android:text="32768"
+                        android:textColor="@color/blockTextColor_32768"
+                        android:textSize="@dimen/text_size_5font"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_block_8192"
-                    android:gravity="center"
-                    android:text="8192"
-                    android:textColor="@color/blockTextColor_8192"
-                    android:textSize="@dimen/text_size_4font"
-                    android:textStyle="bold" />
+                    android:background="@drawable/bg_block">
+
+                    <TextView
+                        android:id="@+id/block_3x2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_block_16384"
+                        android:gravity="center"
+                        android:text="16384"
+                        android:textColor="@color/blockTextColor_16384"
+                        android:textSize="@dimen/text_size_5font"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_block">
+
+                    <TextView
+                        android:id="@+id/block_3x3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_block_8192"
+                        android:gravity="center"
+                        android:text="8192"
+                        android:textColor="@color/blockTextColor_8192"
+                        android:textSize="@dimen/text_size_4font"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
