@@ -16,7 +16,6 @@ public class RatioLayout extends LinearLayout {
         mPicRatio = typedArray.getFloat(R.styleable.RatioLayout_picRatio, 0);
 
         typedArray.recycle();
-
     }
 
     public RatioLayout(Context context) {
