@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -21,22 +22,16 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
     private static final String TAG = "MainActivity";
-    private static final int[][] blockResourceIds = {
-            {R.id.block_0x0, R.id.block_0x1, R.id.block_0x2, R.id.block_0x3},
-            {R.id.block_1x0, R.id.block_1x1, R.id.block_1x2, R.id.block_1x3},
-            {R.id.block_2x0, R.id.block_2x1, R.id.block_2x2, R.id.block_2x3},
-            {R.id.block_3x0, R.id.block_3x1, R.id.block_3x2, R.id.block_3x3}
-    };
+    private static final int RIGHT = 0;
+    private static final int LEFT = 1;
+    private static final int DOWN = 2;
+    private static final int UP = 3;
+    private static final int[][] blockResourceIds = {{R.id.block_0x0, R.id.block_0x1, R.id.block_0x2, R.id.block_0x3}, {R.id.block_1x0, R.id.block_1x1, R.id.block_1x2, R.id.block_1x3}, {R.id.block_2x0, R.id.block_2x1, R.id.block_2x2, R.id.block_2x3}, {R.id.block_3x0, R.id.block_3x1, R.id.block_3x2, R.id.block_3x3}};
     Random rnd = new Random();
     GestureDetector mGestureDetector;
     SharedPreferences pref;
     private TextView[][] mBlockViews = new TextView[4][4];
-    private int[][] mInts = {
-            {0, 0, 0, 0},
-            {0, 0, 0, 0},
-            {0, 0, 0, 0},
-            {0, 0, 0, 0}
-    };
+    private int[][] mInts = {{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
     private int mScore = 0;
     private TextView tvScore;
     private View view;
@@ -179,151 +174,136 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     }
 
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        float posX = e2.getX() - e1.getX();
-        float posY = e2.getY() - e1.getY();
-        float lenX = Math.abs(posX);
-        float lenY = Math.abs(posY);
-        int x, y, n, n2;
+    private void move(int direction) {
+        int x, y, n, n2, x2, y2;
         boolean flag;
         boolean isMoved = false, isMovable = true;
 
-        Log.i(TAG, "posX = " + posX + ", posY = " + posY);
-        if (posX > 0 && lenX > lenY) {
-            Log.e(TAG, "onFling-" + "向右滑动: " + mIntsToString());
-
-            int x2;
-            for (y = 0; y < 4; y++) {
-                x2 = 3;
-                for (x = 2; x >= 0; x--) {
-                    n = mInts[y][x];
-                    if (n > 0) {
-                        n2 = mInts[y][x2];
-                        flag = true;
-                        if (n == n2) {
-                            n += n2;
-                            mScore += n;
-                        } else if (n2 > 0) {
-                            x2--;
-                            if (x2 > x && mInts[y][x2] == 0) {
-                                flag = false;
+        switch (direction) {
+            case RIGHT:
+                for (y = 0; y < 4; y++) {
+                    x2 = 3;
+                    for (x = 2; x >= 0; x--) {
+                        n = mInts[y][x];
+                        if (n > 0) {
+                            n2 = mInts[y][x2];
+                            flag = true;
+                            if (n == n2) {
+                                n += n2;
+                                mScore += n;
+                            } else if (n2 > 0) {
+                                x2--;
+                                if (x2 > x && mInts[y][x2] == 0) {
+                                    flag = false;
+                                } else {
+                                    continue;
+                                }
                             } else {
-                                continue;
+                                flag = false;
                             }
-                        } else {
-                            flag = false;
+                            mInts[y][x] = 0;
+                            mInts[y][x2] = n;
+                            if (flag) {
+                                x2--;
+                            }
+                            isMoved = true;
                         }
-                        mInts[y][x] = 0;
-                        mInts[y][x2] = n;
-                        if (flag) {
-                            x2--;
-                        }
-                        isMoved = true;
                     }
                 }
-            }
-        } else if (posX < 0 && lenX > lenY) {
-            Log.e(TAG, "onFling-" + "向左滑动: " + mIntsToString());
-
-            int x2;
-            for (y = 0; y < 4; y++) {
-                x2 = 0;
-                for (x = 1; x < 4; x++) {
-                    n = mInts[y][x];
-                    if (n > 0) {
-                        n2 = mInts[y][x2];
-                        flag = true;
-                        if (n == n2) {
-                            n += n2;
-                            mScore += n;
-                        } else if (n2 > 0) {
-                            x2++;
-                            if (x2 < x && mInts[y][x2] == 0) {
-                                flag = false;
+                break;
+            case LEFT:
+                for (y = 0; y < 4; y++) {
+                    x2 = 0;
+                    for (x = 1; x < 4; x++) {
+                        n = mInts[y][x];
+                        if (n > 0) {
+                            n2 = mInts[y][x2];
+                            flag = true;
+                            if (n == n2) {
+                                n += n2;
+                                mScore += n;
+                            } else if (n2 > 0) {
+                                x2++;
+                                if (x2 < x && mInts[y][x2] == 0) {
+                                    flag = false;
+                                } else {
+                                    continue;
+                                }
                             } else {
-                                continue;
+                                flag = false;
                             }
-                        } else {
-                            flag = false;
+                            mInts[y][x] = 0;
+                            mInts[y][x2] = n;
+                            if (flag) {
+                                x2++;
+                            }
+                            isMoved = true;
                         }
-                        mInts[y][x] = 0;
-                        mInts[y][x2] = n;
-                        if (flag) {
-                            x2++;
-                        }
-                        isMoved = true;
                     }
                 }
-            }
-        } else if (posY > 0 && lenY > lenX) {
-            Log.e(TAG, "onFling-" + "向下滑动: " + mIntsToString());
-
-            int y2;
-            for (x = 0; x < 4; x++) {
-                y2 = 3;
-                for (y = 2; y >= 0; y--) {
-                    n = mInts[y][x];
-                    if (n > 0) {
-                        n2 = mInts[y2][x];
-                        flag = true;
-                        if (n == n2) {
-                            n += n2;
-                            mScore += n;
-                        } else if (n2 > 0) {
-                            y2--;
-                            if (y2 > y && mInts[y2][x] == 0) {
-                                flag = false;
+                break;
+            case DOWN:
+                for (x = 0; x < 4; x++) {
+                    y2 = 3;
+                    for (y = 2; y >= 0; y--) {
+                        n = mInts[y][x];
+                        if (n > 0) {
+                            n2 = mInts[y2][x];
+                            flag = true;
+                            if (n == n2) {
+                                n += n2;
+                                mScore += n;
+                            } else if (n2 > 0) {
+                                y2--;
+                                if (y2 > y && mInts[y2][x] == 0) {
+                                    flag = false;
+                                } else {
+                                    continue;
+                                }
                             } else {
-                                continue;
+                                flag = false;
                             }
-                        } else {
-                            flag = false;
+                            mInts[y][x] = 0;
+                            mInts[y2][x] = n;
+                            if (flag) {
+                                y2--;
+                            }
+                            isMoved = true;
                         }
-                        mInts[y][x] = 0;
-                        mInts[y2][x] = n;
-                        if (flag) {
-                            y2--;
-                        }
-                        isMoved = true;
                     }
                 }
-            }
-        } else if (posY < 0 && lenY > lenX) {
-            Log.e(TAG, "onFling-" + "向上滑动: " + mIntsToString());
-
-            int y2;
-            for (x = 0; x < 4; x++) {
-                y2 = 0;
-                for (y = 1; y < 4; y++) {
-                    n = mInts[y][x];
-                    if (n > 0) {
-                        n2 = mInts[y2][x];
-                        flag = true;
-                        if (n == n2) {
-                            n += n2;
-                            mScore += n;
-                        } else if (n2 > 0) {
-                            y2++;
-                            if (y2 < y && mInts[y2][x] == 0) {
-                                flag = false;
+                break;
+            case UP:
+                for (x = 0; x < 4; x++) {
+                    y2 = 0;
+                    for (y = 1; y < 4; y++) {
+                        n = mInts[y][x];
+                        if (n > 0) {
+                            n2 = mInts[y2][x];
+                            flag = true;
+                            if (n == n2) {
+                                n += n2;
+                                mScore += n;
+                            } else if (n2 > 0) {
+                                y2++;
+                                if (y2 < y && mInts[y2][x] == 0) {
+                                    flag = false;
+                                } else {
+                                    continue;
+                                }
                             } else {
-                                continue;
+                                flag = false;
                             }
-                        } else {
-                            flag = false;
+                            mInts[y][x] = 0;
+                            mInts[y2][x] = n;
+                            if (flag) {
+                                y2++;
+                            }
+                            isMoved = true;
                         }
-                        mInts[y][x] = 0;
-                        mInts[y2][x] = n;
-                        if (flag) {
-                            y2++;
-                        }
-                        isMoved = true;
                     }
                 }
-            }
-        } else {
-            isMovable = false;
+                break;
         }
 
         if (isMovable) {
@@ -405,6 +385,54 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         if (isMovable) {
             Log.e(TAG, "Movable: " + mIntsToString());
         }
+    }
+
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                move(LEFT);
+                return true;
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                move(RIGHT);
+                return true;
+            case KeyEvent.KEYCODE_DPAD_UP:
+                move(UP);
+                return true;
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                move(DOWN);
+                return true;
+            default:
+                return super.onKeyUp(keyCode, event);
+        }
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        float posX = e2.getX() - e1.getX();
+        float posY = e2.getY() - e1.getY();
+        float lenX = Math.abs(posX);
+        float lenY = Math.abs(posY);
+
+
+        Log.i(TAG, "posX = " + posX + ", posY = " + posY);
+        if (posX > 0 && lenX > lenY) {
+            Log.e(TAG, "onFling-" + "向右滑动: " + mIntsToString());
+
+            move(RIGHT);
+        } else if (posX < 0 && lenX > lenY) {
+            Log.e(TAG, "onFling-" + "向左滑动: " + mIntsToString());
+
+            move(LEFT);
+        } else if (posY > 0 && lenY > lenX) {
+            Log.e(TAG, "onFling-" + "向下滑动: " + mIntsToString());
+
+            move(DOWN);
+        } else if (posY < 0 && lenY > lenX) {
+            Log.e(TAG, "onFling-" + "向上滑动: " + mIntsToString());
+
+            move(UP);
+        }
+
 
         return true;
     }

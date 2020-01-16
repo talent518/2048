@@ -5,6 +5,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="@dimen/padding"
     tools:context=".MainActivity">
@@ -85,8 +86,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin"
         android:layout_marginTop="@dimen/margin"
+        android:layout_marginBottom="@dimen/margin"
         android:background="@drawable/bg_linkman"
         android:lineSpacingExtra="8dp"
         android:padding="16dp"
